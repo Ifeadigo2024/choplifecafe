@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Location Checkout</title>
+</head>
+<body>
+
+  <h3>Select Delivery Location</h3>
+  <select id="locationSelect">
+    <option value="">-- Select a location --</option>
+    <option value="lagos">Lagos</option>
+    <option value="abuja">Abuja</option>
+    <option value="portharcourt">Port Harcourt</option>
+  </select>
+
+  <br><br>
+
+  <button id="proceedBtn" disabled>Proceed to Checkout</button>
+
+  <script>
+    // Get elements
+    const locationSelect = document.getElementById('locationSelect');
+    const proceedBtn = document.getElementById('proceedBtn');
+
+    // Listen for dropdown change
+    locationSelect.addEventListener('change', function () {
+      // If a location is selected, enable button
+      if (locationSelect.value !== '') {
+        proceedBtn.disabled = false;
+      } else {
+        proceedBtn.disabled = true;
+      }
+    });
+  </script>
+
+</body>
+</html>
