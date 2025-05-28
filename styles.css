@@ -619,3 +619,38 @@ body {
     padding: 0 12px;
   }
 }
+
+
+  .email-float-btn {
+    position: fixed;
+    bottom: 25px;
+    right: 25px;
+    background: linear-gradient(135deg, #111, #333);
+    color: #fff;
+    font-size: 22px;
+    padding: 18px;
+    border-radius: 50%;
+    box-shadow: 0 8px 20px rgba(0,0,0,0.3);
+    z-index: 999;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    animation: pulse 2.5s infinite;
+  }
+
+  .email-float-btn:hover {
+    color: black !important;
+    transform: scale(1.1);
+    box-shadow: 0 12px 30px rgba(0, 0, 0, 0.3);
+    background: linear-gradient(135deg, #ffffff, #ffffff);
+  }
+
+  @keyframes pulse {
+    0% { box-shadow: 0 0 0 0 rgba(255,255,255, 0.1); }
+    70% { box-shadow: 0 0 0 15px rgba(255,255,255, 0); }
+    100% { box-shadow: 0 0 0 0 rgba(255,255,255, 0); }
+  }
+
+  /* FontAwesome CDN for email icon */
+  @import url('https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css');

@@ -30,6 +30,8 @@
 
     <!-- AOS JS -->
     <script src="https://cdn.jsdelivr.net/npm/aos@2.3.4/dist/aos.js"></script>
+
+    <link rel="icon" type="image/png" href="favicon.svg">
 </head>
 
 
@@ -115,9 +117,9 @@
       <div class="swiper-slide menu-slide"><i class="fas fa-cheese mr-2"></i> Cheeseburger</div>
       <div class="swiper-slide menu-slide"><i class="fas fa-burger mr-2"></i> Double Cheeseburger</div>
       <div class="swiper-slide menu-slide"><i class="fas fa-fire mr-2"></i> Smash Burger</div>
-      <div class="swiper-slide menu-slide"><i class="fas fa-pizza-slice mr-2"></i> Suya Pasta</div>
+      <div class="swiper-slide menu-slide"><i class="fas fa-noddle mr-2"></i> Suya Pasta</div>
       <div class="swiper-slide menu-slide"><i class="fas fa-hotdog mr-2"></i> Classic Hotdog</div>
-      <div class="swiper-slide menu-slide"><i class="fas fa-wrap mr-2"></i> Suya Wrap</div>
+      <div class="swiper-slide menu-slide"><i class="fas fa-bowl-food mr-2"></i> Suya Wrap</div>
       <div class="swiper-slide menu-slide"><i class="fas fa-french-fries mr-2"></i> Choplife Fries</div>
       <div class="swiper-slide menu-slide"><i class="fas fa-ice-cream mr-2"></i> Vanilla Milkshake</div>
       <div class="swiper-slide menu-slide"><i class="fas fa-drumstick-bite mr-2"></i> BBQ Roasted Chicken</div>
@@ -381,12 +383,15 @@
 
         <!-- Firebase Newsletter Form -->
         <form 
+        action="https://formspree.io/f/mgvkjjgp"
+        method="POST" 
         id="newsletterForm"
         class="flex flex-col sm:flex-row items-center justify-center gap-4"
         >
         <input 
             type="email" 
             id="emailInput"
+            name="email"
             placeholder="Your email address" 
             required 
             class="w-full sm:w-2/3 px-5 py-3 rounded-lg bg-black border border-gray-700 text-white placeholder-gray-400"
@@ -438,26 +443,11 @@
     <!-- Cart Items List -->
     <div id="cartItems" class="space-y-4 max-h-64 overflow-y-auto border border-gray-300 p-4 rounded"></div>
 
-    <!-- Delivery Location -->
-    <div class="mt-6">
-      <h3 class="font-semibold mb-2">Select Delivery Location:</h3>
-      <label class="block mb-1">
-        <input type="radio" name="location" value="Enugu" class="location-option mr-2"> Enugu (₦2000)
-      </label>
-      <label class="block">
-        <input type="radio" name="location" value="Lagos" class="location-option mr-2"> Lagos (₦2500)
-      </label>
-    </div>
-
     <!-- Totals -->
     <div class="mt-6 text-lg">
       <div class="flex justify-between">
         <span>Subtotal:</span>
         <span id="subtotal">₦0</span>
-      </div>
-      <div class="flex justify-between">
-        <span>Delivery Fee:</span>
-        <span id="deliveryFee">₦0</span>
       </div>
       <div class="flex justify-between font-bold text-xl mt-2">
         <span>Total:</span>
@@ -467,7 +457,7 @@
 
     <!-- Actions -->
     <div class="mt-6 flex justify-between items-center">
-      <button id="continue-shopping" class=" px-6 py-2 text-blue-600 bg-gray-200 rounded hover:bg-opacity-90">Continue Shopping</button>
+      <button id="continue-shopping" class="px-6 py-2 text-blue-600 bg-gray-200 rounded hover:bg-opacity-90">Continue Shopping</button>
       <button id="checkout-button" class="bg-black text-white px-6 py-2 rounded hover:bg-opacity-90 transition">Proceed to Checkout</button>
     </div>
 
@@ -499,20 +489,6 @@
         <textarea id="address" name="address" required class="w-full border border-gray-300 rounded px-3 py-2" rows="3"></textarea>
       </div>
 
-      <!-- <div>
-        <h3 class="font-semibold mb-2">Select Payment Method:</h3>
-        <label class="block mb-1">
-            <input type="radio" name="payment" value="card" required class="mr-2"> Card
-        </label>
-        <label class="block mb-1">
-            <input type="radio" name="payment" value="ussd" class="mr-2"> USSD
-        </label>
-        <label class="block">
-            <input type="radio" name="payment" value="banktransfer" class="mr-2"> Bank Transfer
-        </label>
-    </div> -->
-
-
       <div class="flex justify-between items-center mt-6">
         <button type="button" id="close-checkout" class="text-red-600 hover:underline">Cancel</button>
         <button type="submit" class="bg-black text-white px-6 py-2 rounded hover:bg-opacity-90 transition">Place Order</button>
@@ -521,6 +497,7 @@
     </form>
   </div>
 </div>
+
 
 
     <!-- Order Confirmation Modal
@@ -612,7 +589,6 @@
 
 <script>
 document.addEventListener('DOMContentLoaded', () => {
-  // Firebase config and initialization
   const firebaseConfig = {
     apiKey: "AIzaSyDt5JCqHLR2Kx5-W5ZtSlU5_kFOC9HPh6g",
     authDomain: "choplife-cafe.firebaseapp.com",
@@ -625,12 +601,9 @@ document.addEventListener('DOMContentLoaded', () => {
   firebase.initializeApp(firebaseConfig);
   const db = firebase.firestore();
 
-  // DOM Elements
   const cartItemsContainer = document.getElementById('cartItems');
   const subtotalEl = document.getElementById('subtotal');
-  const deliveryFeeEl = document.getElementById('deliveryFee');
   const totalEl = document.getElementById('totalAmount');
-  const locationRadios = document.querySelectorAll('.location-option');
 
   const cartModal = document.getElementById('cartModal');
   const checkoutModal = document.getElementById('checkoutModal');
@@ -641,15 +614,8 @@ document.addEventListener('DOMContentLoaded', () => {
   const closeCheckoutBtn = document.getElementById('close-checkout');
   const checkoutForm = document.getElementById('checkout-form');
 
-  const deliveryFees = {
-    'Enugu': 2000,
-    'Lagos': 2500
-  };
-
-  let selectedDeliveryFee = 0;
   let cart = [];
 
-  // Update Cart UI - shows items, subtotal, delivery fee, total, and buttons
   function updateCartUI() {
     cartItemsContainer.innerHTML = '';
     let subtotal = 0;
@@ -678,13 +644,9 @@ document.addEventListener('DOMContentLoaded', () => {
       });
     }
 
-    // Calculate totals
-    const total = subtotal + selectedDeliveryFee;
     subtotalEl.textContent = `₦${subtotal.toLocaleString()}`;
-    deliveryFeeEl.textContent = `₦${selectedDeliveryFee.toLocaleString()}`;
-    totalEl.textContent = `₦${total.toLocaleString()}`;
+    totalEl.textContent = `₦${subtotal.toLocaleString()}`;
 
-    // Setup increase quantity buttons
     document.querySelectorAll('.increase').forEach(btn => {
       btn.addEventListener('click', () => {
         const i = parseInt(btn.getAttribute('data-index'));
@@ -693,7 +655,6 @@ document.addEventListener('DOMContentLoaded', () => {
       });
     });
 
-    // Setup decrease quantity buttons
     document.querySelectorAll('.decrease').forEach(btn => {
       btn.addEventListener('click', () => {
         const i = parseInt(btn.getAttribute('data-index'));
@@ -706,7 +667,6 @@ document.addEventListener('DOMContentLoaded', () => {
       });
     });
 
-    // Setup remove item buttons
     document.querySelectorAll('.remove').forEach(btn => {
       btn.addEventListener('click', () => {
         const i = parseInt(btn.getAttribute('data-index'));
@@ -715,11 +675,9 @@ document.addEventListener('DOMContentLoaded', () => {
       });
     });
 
-    // Update cart count badge
     document.getElementById('cart-count').textContent = cart.length;
   }
 
-  // Add to cart button functionality
   document.querySelectorAll('.add-to-cart').forEach(button => {
     button.addEventListener('click', function () {
       const name = this.getAttribute('data-name');
@@ -737,40 +695,22 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   });
 
-  // Delivery location radio buttons change
-  locationRadios.forEach(radio => {
-    radio.addEventListener('change', () => {
-      const checked = document.querySelector('.location-option:checked');
-      selectedDeliveryFee = checked ? deliveryFees[checked.value] : 0;
-      updateCartUI();
-    });
-  });
-
-  // Modal control buttons
   closeCartBtn.addEventListener('click', () => cartModal.classList.add('hidden'));
   continueShoppingBtn.addEventListener('click', () => cartModal.classList.add('hidden'));
   closeCheckoutBtn.addEventListener('click', () => checkoutModal.classList.add('hidden'));
 
-  // Proceed to checkout button
   checkoutBtn.addEventListener('click', () => {
     if (cart.length === 0) return alert('Your cart is empty.');
-    const checkedLocation = document.querySelector('.location-option:checked');
-    if (!checkedLocation) return alert('Please select a delivery location.');
     cartModal.classList.add('hidden');
     checkoutModal.classList.remove('hidden');
 
-    // Update the checkout total amount display
     const subtotal = cart.reduce((acc, item) => acc + item.price * item.quantity, 0);
-    selectedDeliveryFee = deliveryFees[checkedLocation.value];
-    const total = subtotal + selectedDeliveryFee;
-    document.getElementById('checkout-total-amount').textContent = `₦${total.toLocaleString()}`;
+    document.getElementById('checkout-total-amount').textContent = `₦${subtotal.toLocaleString()}`;
   });
 
-  // Checkout form submission - handles order saving and triggers Flutterwave payment
   checkoutForm.addEventListener('submit', async (e) => {
     e.preventDefault();
 
-    // Collect form data
     const name = document.getElementById('name').value.trim();
     const email = document.getElementById('email').value.trim();
     const phone = document.getElementById('phone').value.trim();
@@ -778,28 +718,22 @@ document.addEventListener('DOMContentLoaded', () => {
     const totalText = totalEl.textContent;
     const total = parseFloat(totalText.replace(/[^0-9.]/g, ""));
 
-    // Validate required fields and total amount
     if (!name || !email || !phone || !address || !total || total <= 0) {
       return alert("Please fill in all required fields.");
     }
 
-    // Since Flutterwave is the only payment method, hardcode it
-    const paymentMethod = "flutterwave";
-
     try {
-      // Save order data in Firebase Firestore
       const docRef = await db.collection("orders").add({
         name,
         email,
         phone,
         address,
-        paymentMethod,
+        paymentMethod: "flutterwave",
         total,
         status: "pending",
         createdAt: firebase.firestore.FieldValue.serverTimestamp(),
       });
 
-      // Generate item summary
       const cartSummary = cart.map(item => `${item.name} x${item.quantity}`).join(", ");
 
       FlutterwaveCheckout({
@@ -809,14 +743,13 @@ document.addEventListener('DOMContentLoaded', () => {
         currency: "NGN",
         payment_options: "card,ussd,banktransfer",
         customer: {
-          email: email,
+          email,
           phone_number: phone,
-          name: name
+          name
         },
         customizations: {
           title: "Choplife Café",
-          description: `Order: ${cartSummary}`, // Shows items ordered
-          // logo: "https://via.placeholder.com/150"
+          description: `Order: ${cartSummary}`
         },
         callback: function (response) {
           alert("Payment complete! Ref: " + response.transaction_id);
@@ -826,12 +759,12 @@ document.addEventListener('DOMContentLoaded', () => {
         }
       });
 
-
     } catch (err) {
       console.error("Order error:", err);
       alert("Something went wrong. Please try again.");
     }
   });
+
 
   // Cart button to open cart modal
   const cartBtn = document.getElementById('cart-btn');
@@ -861,7 +794,14 @@ document.addEventListener('DOMContentLoaded', () => {
   });
 </script>
 
-
+<!-- Floating Email Message Icon -->
+<a 
+  href="mailto:Choplifecafe@yahoo.com?subject=Message from Website" 
+  class="email-float-btn" 
+  title="Send us an email"
+>
+  <i class="fas fa-envelope"></i>
+</a>
 
 
 </body>
