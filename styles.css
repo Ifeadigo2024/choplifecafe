@@ -587,3 +587,36 @@ body {
   body.no-scroll {
     overflow: hidden;
   }
+
+.menu-slider-wrapper {
+  background: rgba(0, 0, 0, 0.65);
+  padding: 10px 0;
+  overflow: hidden;
+}
+
+.swiper {
+  width: 100%;
+}
+
+.swiper-wrapper {
+  display: flex;
+}
+
+.menu-slide {
+  display: inline-flex !important;
+  align-items: center;
+  padding: 0 20px;
+  min-width: max-content;
+  font-size: 1rem !important;
+  font-weight: 900;
+  color: white;
+  white-space: nowrap;
+}
+
+@media (max-width: 768px) {
+  .menu-slide {
+    font-size: 0.75rem;
+    padding: 0 12px;
+  }
+}
+.pulse

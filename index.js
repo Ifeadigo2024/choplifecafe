@@ -361,3 +361,5 @@ document.addEventListener('DOMContentLoaded', function() {
 
   // Initial load
   updateReview();
+
+  
