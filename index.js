@@ -281,31 +281,31 @@ document.addEventListener('DOMContentLoaded', function() {
 });
 
 
-// <!-- JS: Mobile Toggle Script -->
-// <!-- JS: Mobile Toggle Script -->
-const menuToggle = document.getElementById('menu-toggle');
-const mobileMenu = document.getElementById('mobile-menu');
-const mobileLinks = document.querySelectorAll('.mobile-link');
+// // <!-- JS: Mobile Toggle Script -->
+// // <!-- JS: Mobile Toggle Script -->
+// const menuToggle = document.getElementById('menu-toggle');
+// const mobileMenu = document.getElementById('mobile-menu');
+// const mobileLinks = document.querySelectorAll('.mobile-link');
 
-menuToggle.addEventListener('click', () => {
-    mobileMenu.classList.toggle('hidden');
+// menuToggle.addEventListener('click', () => {
+//     mobileMenu.classList.toggle('hidden');
 
-    // Toggle no-scroll on body when menu opens/closes
-    if (!mobileMenu.classList.contains('hidden')) {
-        document.body.classList.add('no-scroll');
-    } else {
-        document.body.classList.remove('no-scroll');
-    }
-});
+//     // Toggle no-scroll on body when menu opens/closes
+//     if (!mobileMenu.classList.contains('hidden')) {
+//         document.body.classList.add('no-scroll');
+//     } else {
+//         document.body.classList.remove('no-scroll');
+//     }
+// });
 
-mobileLinks.forEach(link => {
-    link.addEventListener('click', () => {
-        mobileMenu.classList.add('hidden'); // Close the mobile menu
-        document.body.classList.remove('no-scroll'); // Re-enable scrolling
+// mobileLinks.forEach(link => {
+//     link.addEventListener('click', () => {
+//         mobileMenu.classList.add('hidden'); // Close the mobile menu
+//         document.body.classList.remove('no-scroll'); // Re-enable scrolling
 
-        // No preventDefault here to allow instant jump
-    });
-});
+//         // No preventDefault here to allow instant jump
+//     });
+// });
 
 // TESTINONY
   const reviews = [

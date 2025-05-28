@@ -574,3 +574,16 @@ body {
   background: none;
   cursor: pointer;
 }
+
+
+  /* Smooth slide down/up for mobile menu */
+  #mobile-menu {
+    transition: max-height 0.3s ease-out;
+  }
+  #mobile-menu.open {
+    max-height: 500px; /* enough height to show all links */
+  }
+  /* Disable scrolling when nav open */
+  body.no-scroll {
+    overflow: hidden;
+  }
