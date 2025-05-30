@@ -654,3 +654,96 @@ body {
 
   /* FontAwesome CDN for email icon */
   @import url('https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css');
+
+
+  /* Deal of the day. */
+  .deal-of-the-day {
+  background: linear-gradient(135deg, #040913, #2f3032);
+  color: #fff;
+  padding: 60px 20px;
+}
+
+.deal-container {
+  max-width: 1200px;
+  margin: 0 auto;
+  text-align: center;
+}
+
+.deal-heading {
+  font-size: 2rem;
+  font-weight: 700;
+  margin-bottom: 40px;
+  color: #d4af37; /* Gold accent */
+}
+
+.deal-card {
+  display: flex;
+  flex-wrap: wrap;
+  background: #060b16;
+  border-radius: 16px;
+  overflow: hidden;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.3);
+}
+
+.deal-image {
+  flex: 1 1 300px;
+  width: 100%;
+  object-fit: cover;
+  height: auto;
+  max-height: 400px;
+}
+
+.deal-content {
+  flex: 1 1 300px;
+  padding: 30px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  text-align: left;
+}
+
+.deal-name {
+  font-size: 1.8rem;
+  margin-bottom: 15px;
+  color: #fff;
+}
+
+.deal-description {
+  font-size: 1rem;
+  margin-bottom: 20px;
+  line-height: 1.6;
+  color: #ccc;
+}
+
+.deal-btn {
+  background-color: #d4af37;
+  border: none;
+  padding: 12px 24px;
+  font-size: 1rem;
+  border-radius: 8px;
+  cursor: pointer;
+  color: #0a1a35;
+  font-weight: bold;
+  transition: background-color 0.3s ease;
+}
+
+.deal-btn:hover {
+  background-color: #b8962f;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .deal-card {
+    flex-direction: column;
+  }
+
+  .deal-content {
+    text-align: center;
+  }
+  .deal-heading {
+    font-size: 1.5rem;
+    font-weight: 700;
+    margin-bottom: 40px;
+    padding-top: 10px;
+  }
+}

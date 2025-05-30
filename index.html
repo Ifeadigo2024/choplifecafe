@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Choplife Cafe | Premium Dining Experience</title>
+    <title>Choplife Cafe</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700&family=Roboto:wght@300;400;500&display=swap" rel="stylesheet">
@@ -39,19 +39,20 @@
 
 <body class="min-h-screen">
 <!-- Mobile Nav -->
-<nav class="bg-white py-3 px-6 fixed top-0 z-50 w-full shadow-sm">
+<nav class="bg-white py-3 py-md-2 px-6 fixed top-0 z-50 w-full shadow-sm">
   <div class="max-w-7xl mx-auto flex justify-between items-center">
     <!-- Logo -->
     <div class="flex items-center">
-      <img class="logo" src="./Assets/logo.png" width="35%" alt="Choplife Cafe Logo">
+      <img class="logo" src="./Assets/logo.png" width="30%" alt="Choplife Cafe Logo">
     </div>
 
     <!-- Desktop Nav -->
-    <div class="hidden md:flex space-x-8">
+    <div class="hidden md:flex space-x-">
       <a href="#" class="nav-link text-gray-700 hover:text-gray-900">Home</a>
       <a href="#menu" class="nav-link text-gray-700 hover:text-gray-900">Menu</a>
       <a href="#about" class="nav-link text-gray-700 hover:text-gray-900">About</a>
       <a href="#contact" class="nav-link text-gray-700 hover:text-gray-900">Contact</a>
+      <a href="#deal" class="nav-link text-white hover:text-gray-900 bg-black rounded-full">Daily Combo</a>
     </div>
 
     <!-- Cart + Hamburger -->
@@ -74,6 +75,7 @@
   <div id="mobile-menu" class="md:hidden overflow-hidden max-h-0 transition-max-height duration-300 bg-white">
     <a href="#hero" class="block px-6 py-3 border-t border-gray-200 text-gray-700 hover:bg-gray-100">Home</a>
     <a href="#menu" class="block px-6 py-3 border-t border-gray-200 text-gray-700 hover:bg-gray-100">Menu</a>
+    <a href="#deal" class="block px-6 py-3 border-t border-gray-200 text-gray-700 hover:bg-gray-100">Daily Combo</a>
     <a href="#about" class="block px-6 py-3 border-t border-gray-200 text-gray-700 hover:bg-gray-100">About</a>
     <a href="#contact" class="block px-6 py-3 border-t border-gray-200 text-gray-700 hover:bg-gray-100">Contact</a>
   </div>
@@ -99,11 +101,11 @@
               <span class="font-light">Your go-to spot for juicy burgers, creamy shakes, and meals made to crave.</span>
             </p>
             <div class="btn-animation flex flex-col sm:flex-row justify-center gap-4">
-              <a href="#add" class="pulse px-8 py-4 bg-white hover:bg-amber-600 text-black font-semibold rounded-full transition-all duration-300 transform hover:scale-105 shadow-lg">
+              <a href="#menu" class="pulse px-8 py-4 bg-white hover:bg-amber-600 text-black font-semibold rounded-full transition-all duration-300 transform hover:scale-105 shadow-lg">
                 Order Now <i class="fas fa-bolt ml-2"></i>
               </a>
-              <a href="#menu" class="px-8 py-4 bg-transparent border-2 border-white hover:bg-white hover:bg-opacity-20 text-white font-semibold rounded-full transition-all duration-300 transform hover:scale-105">
-                View Menu <i class="fas fa-utensils ml-2"></i>
+              <a href="#deal" class="px-8 py-4 bg-transparent border-2 border-white hover:bg-white hover:bg-opacity-20 text-white font-semibold rounded-full transition-all duration-300 transform hover:scale-105">
+                Daily Combo <i class="fas fa-utensils ml-2"></i>
               </a>
             </div>
           </div>
@@ -353,6 +355,24 @@
             </div>
         </div>
     </section>
+
+    <!-- Deal of the day. -->
+    <section id="deal" class="deal-of-the-day">
+    <div class="deal-container">
+      <h2 class="deal-heading pt-5">Deal of the Day 🏆</h2>
+      <div class="deal-card">
+        <img src="./Assets/Gameday-Combo-SOLD-OUT.jpg" alt="Gameday Combo" class="deal-image" />
+        <div class="deal-content">
+          <h3 class="deal-name">Gameday Combo</h3>
+          <p class="deal-description">
+            Fuel up like a champ with a juicy cheeseburger, crispy Choplife fries, and a thick, creamy milkshake.
+          </p>
+          <button class="deal-btn">Sold out</button>
+        </div>
+      </div>
+    </div>
+  </section>
+
 
     <!-- About Section -->
     <section id="about" class="py-16 px-6 md:px-12 bg-gray-50">
